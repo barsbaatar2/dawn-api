@@ -5,14 +5,62 @@ const serverless = require('serverless-http');
 const app = express();
 const bodyParser = require('body-parser');
 
+const mysql = require('mysql');
+const db = mysql.createConnection({
+  host: "remotemysql.com",
+  user: "YlO55imx4W",
+  password: "xe5gPs4pNo",
+  database: "YlO55imx4W"
+});
+
 const router = express.Router();
+
+// <---------------- Routes START ---------------->
+
 router.get('/', (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.write('<h1>Hello from Express.js!</h1>');
+  res.writeHead(400, { 'Content-Type': 'text/html' });
+  res.write('<h1>Barsbaatar Testing!</h1>');
   res.end();
 });
-router.get('/another', (req, res) => res.json({ route: req.originalUrl }));
-router.post('/', (req, res) => res.json({ postBody: req.body }));
+
+router.get('/users', (req, res) => {
+  db.connect((err) => {
+    if (err) { console.log('Error connected to database' + err); }
+    console.log('Connected to database');
+  });
+  global.db = db;
+
+  let query = `SELECT * FROM users`;
+  db.query(query, (err, result) => {
+    if (err) { res.redirect('/'); }
+
+    res.json({result})
+  })
+});
+
+router.get('/users/:id?', (req, res) => {
+  db.connect((err) => {
+    if (err) { console.log('Error connected to database' + err); }
+    console.log('Connected to database');
+  });
+  global.db = db;
+  let query = `SELECT * FROM users WHERE id = ${req.params.id}`;
+  db.query(query, (err, result) => {
+    if (err) { res.redirect('/'); }
+    res.json(result[0])
+  })
+})
+
+router.post('/signup', (req, res) => {
+  let query = `INSERT INTO users (username, password, age, type) VALUES ('${req.body.username}', '${req.body.password}', '${req.body.age}', '${req.body.type}');`;
+  // res.send(query)
+  db.query(query, (err, result) => {
+    if (err) { res.redirect('/'); }
+    res.send(result)
+  })
+})
+
+// <---------------- Routes END ---------------->
 
 app.use(bodyParser.json());
 app.use('/.netlify/functions/server', router);  // path must route to lambda
