@@ -31,8 +31,7 @@ router.get('/', (req, res) => {
 router.get('/users', (req, res) => {
   let query = `SELECT * FROM users`;
   db.query(query, (err, result) => {
-    if (err) { res.redirect('/'); }
-
+    if (err) { res.end(); }
     res.json({result})
   })
 });
@@ -40,8 +39,8 @@ router.get('/users', (req, res) => {
 router.get('/users/:id?', (req, res) => {
   let query = `SELECT * FROM users WHERE id = ${req.params.id}`;
   db.query(query, (err, result) => {
-    if (err) { res.redirect('/'); }
-    res.json(result[0])
+    if (err) { res.end(); }
+    res.json(result)
   })
 })
 
