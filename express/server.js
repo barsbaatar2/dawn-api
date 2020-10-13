@@ -12,6 +12,11 @@ const db = mysql.createConnection({
   password: "xe5gPs4pNo",
   database: "YlO55imx4W"
 });
+db.connect((err) => {
+  if (err) { console.log('Error connected to database' + err); }
+  console.log('Connected to database');
+});
+global.db = db;
 
 const router = express.Router();
 
@@ -24,18 +29,6 @@ router.get('/', (req, res) => {
 });
 
 router.get('/users', (req, res) => {
-  const db = mysql.createConnection({
-    host: "remotemysql.com",
-    user: "YlO55imx4W",
-    password: "xe5gPs4pNo",
-    database: "YlO55imx4W"
-  });
-  db.connect((err) => {
-    if (err) { console.log('Error connected to database' + err); }
-    console.log('Connected to database');
-  });
-  global.db = db;
-
   let query = `SELECT * FROM users`;
   db.query(query, (err, result) => {
     if (err) { res.redirect('/'); }
@@ -45,17 +38,6 @@ router.get('/users', (req, res) => {
 });
 
 router.get('/users/:id?', (req, res) => {
-  const db = mysql.createConnection({
-    host: "remotemysql.com",
-    user: "YlO55imx4W",
-    password: "xe5gPs4pNo",
-    database: "YlO55imx4W"
-  });
-  db.connect((err) => {
-    if (err) { console.log('Error connected to database' + err); }
-    console.log('Connected to database');
-  });
-  global.db = db;
   let query = `SELECT * FROM users WHERE id = ${req.params.id}`;
   db.query(query, (err, result) => {
     if (err) { res.redirect('/'); }
