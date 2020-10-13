@@ -24,6 +24,12 @@ router.get('/', (req, res) => {
 });
 
 router.get('/users', (req, res) => {
+  const db = mysql.createConnection({
+    host: "remotemysql.com",
+    user: "YlO55imx4W",
+    password: "xe5gPs4pNo",
+    database: "YlO55imx4W"
+  });
   db.connect((err) => {
     if (err) { console.log('Error connected to database' + err); }
     console.log('Connected to database');
@@ -39,6 +45,12 @@ router.get('/users', (req, res) => {
 });
 
 router.get('/users/:id?', (req, res) => {
+  const db = mysql.createConnection({
+    host: "remotemysql.com",
+    user: "YlO55imx4W",
+    password: "xe5gPs4pNo",
+    database: "YlO55imx4W"
+  });
   db.connect((err) => {
     if (err) { console.log('Error connected to database' + err); }
     console.log('Connected to database');
