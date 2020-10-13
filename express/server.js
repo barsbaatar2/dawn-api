@@ -41,8 +41,9 @@ router.get('/users', (req, res) => {
   });
   let query = `SELECT * FROM users`;
   db.query(query, (err, result) => {
-    if (err) { res.send("YAaaay") }
+    if (err) { res.send("YAaaay"); return err;}
     res.json({result})
+    return result
   })
 });
 
