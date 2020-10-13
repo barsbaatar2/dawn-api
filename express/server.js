@@ -14,7 +14,7 @@ const db = mysql.createConnection({
 });
 db.connect((err) => {
   if (err) { console.log('Error connected to database' + err); }
-  console.log('Connected to database');
+  console.log('Connected to database 1');
 });
 global.db = db;
 
