@@ -29,7 +29,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/users', (req, res) => {
-  const db = mysql.createConnection({
+  const db1 = mysql.createConnection({
     host: "remotemysql.com",
     user: "YlO55imx4W",
     password: "xe5gPs4pNo",
@@ -41,7 +41,7 @@ router.get('/users', (req, res) => {
   });
   let query = `SELECT * FROM users`;
   db.query(query, (err, result) => {
-    if (err) { res.send(err) }
+    if (err) { res.send("YAaaay") }
     res.json({result})
   })
 });
