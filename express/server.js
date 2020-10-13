@@ -32,7 +32,7 @@ router.get('/users', (req, res) => {
   let query = `SELECT * FROM users`;
   db.query(query, (err, result) => {
     if (err) { res.end(); }
-    res.json({result})
+    res.write({result})
   })
 });
 
