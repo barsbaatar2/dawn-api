@@ -18,7 +18,7 @@ const router = express.Router();
 // <---------------- Routes START ---------------->
 
 router.get('/', (req, res) => {
-  res.writeHead(400, { 'Content-Type': 'text/html' });
+  // res.writeHead(400, { 'Content-Type': 'text/html' });
   res.write('<h1>Barsbaatar Testing!</h1>');
   res.end();
 });
