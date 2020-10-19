@@ -29,9 +29,9 @@ router.get('/', (req, res) => {
   res.end();
 });
 
-router.get('/users', (req, res) => {
+router.get('/users', async(req, res) => {
   let query = `SELECT * FROM users`;
-  db.query(query, (err, result) => {
+  await db.query(query, (err, result) => {
     res.json({result})
   })
 });
