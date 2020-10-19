@@ -19,17 +19,6 @@ const mysql = require('serverless-mysql')({
   }
 });
 
-async function query(sql){
-  return await mysql.query(sql)
-  .then(res=>{
-    console.log("DONE: " + res);
-    return res
-  })
-  .catch(e => {
-    console.log("ERR: " + e); // Error: Received packet in the wrong sequence
-    throw e;
-  });
-  }
 // <---------------- Routes START ---------------->
 
 router.get('/', (req, res) => {
@@ -41,7 +30,7 @@ router.get('/', (req, res) => {
 router.get('/users', async (req, res) => {
   let sql = `SELECT * FROM users`;
   try{
-    res.send(await mysql.query(sql))
+    await res.send(await mysql.query(sql))
   }catch(err){
     console.log(err)
   }
