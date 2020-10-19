@@ -5,12 +5,31 @@ const serverless = require('serverless-http');
 const app = express();
 const bodyParser = require('body-parser');
 
-const mysql = require('mysql');
+// const mysql = require('serverless-mysql');
 
 const router = express.Router();
 
 
+const mysql = require('serverless-mysql')({
+  config: {
+    host: "remotemysql.com",
+    user: "YlO55imx4W",
+    password: "xe5gPs4pNo",
+    database: "YlO55imx4W"
+  }
+});
 
+async function query(sql){
+  return await mysql.query(sql)
+  .then(res=>{
+    console.log("DONE: " + res);
+    return res
+  })
+  .catch(e => {
+    console.log("ERR: " + e); // Error: Received packet in the wrong sequence
+    throw e;
+  });
+  }
 // <---------------- Routes START ---------------->
 
 router.get('/', (req, res) => {
@@ -19,32 +38,13 @@ router.get('/', (req, res) => {
   res.end();
 });
 
-router.get('/users', async(req, res) => {
-  const db = mysql.createConnection({
-    host: "remotemysql.com",
-    user: "YlO55imx4W",
-    password: "xe5gPs4pNo",
-    database: "YlO55imx4W"
-  });
-  db.connect((err) => {
-    if (err){
-      console.log('Error connected to database' + err);
-      res.send("1" + err)
-      res.end()
-    }
-    else{
-      let query = `SELECT * FROM users`;
-      db.query(query, (err, result) => {
-        if(err){    
-          res.send("2")
-          res.end()
-        }else{
-          res.send("result")
-          res.end()
-        }
-      })
-    }
-  });
+router.get('/users', async (req, res) => {
+  let sql = `SELECT * FROM users`;
+  try{
+    res.send(await mysql.query(sql))
+  }catch(err){
+    console.log(err)
+  }
 });
 
 // <---------------- Routes END ---------------->
