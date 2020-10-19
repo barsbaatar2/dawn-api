@@ -27,11 +27,21 @@ router.get('/users', async(req, res) => {
     database: "YlO55imx4W"
   });
   db.connect((err) => {
-    if (err) { console.log('Error connected to database' + err); }
+    if (err){
+      console.log('Error connected to database' + err);
+      res.send("1")
+      res.end()
+    }
     else{
       let query = `SELECT * FROM users`;
       db.query(query, (err, result) => {
-        res.json({result})
+        if(err){    
+          res.send("1")
+          res.end()
+        }else{
+          res.send(result)
+          res.end()
+        }
       })
     }
   });
