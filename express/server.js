@@ -9,17 +9,7 @@ const mysql = require('mysql');
 
 const router = express.Router();
 
-const db = mysql.createConnection({
-  host: "remotemysql.com",
-  user: "YlO55imx4W",
-  password: "xe5gPs4pNo",
-  database: "YlO55imx4W"
-});
-db.connect((err) => {
-  if (err) { console.log('Error connected to database' + err); }
-  console.log('Connected to database');
-});
-global.db = db;
+
 
 // <---------------- Routes START ---------------->
 
@@ -30,10 +20,21 @@ router.get('/', (req, res) => {
 });
 
 router.get('/users', async(req, res) => {
-  let query = `SELECT * FROM users`;
-  await db.query(query, (err, result) => {
-    res.json({result})
-  })
+  const db = mysql.createConnection({
+    host: "remotemysql.com",
+    user: "YlO55imx4W",
+    password: "xe5gPs4pNo",
+    database: "YlO55imx4W"
+  });
+  db.connect((err) => {
+    if (err) { console.log('Error connected to database' + err); }
+    else{
+      let query = `SELECT * FROM users`;
+      db.query(query, (err, result) => {
+        res.json({result})
+      })
+    }
+  });
 });
 
 // <---------------- Routes END ---------------->
