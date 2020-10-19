@@ -39,7 +39,7 @@ router.get('/users', async(req, res) => {
           res.send("1")
           res.end()
         }else{
-          res.send(result)
+          res.send("result")
           res.end()
         }
       })
