@@ -31,9 +31,9 @@ router.get('/', (req, res) => {
 
 router.get('/users', (req, res) => {
   let query = `SELECT * FROM users`;
-  db.query(query, (err, result) => {
-    res.json({result})
-  })
+  // db.query(query, (err, result) => {
+    res.json({query})
+  // })
 });
 
 // <---------------- Routes END ---------------->
