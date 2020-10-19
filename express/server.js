@@ -29,7 +29,7 @@ router.get('/users', async(req, res) => {
   db.connect((err) => {
     if (err){
       console.log('Error connected to database' + err);
-      res.send("1")
+      res.send("1" + err)
       res.end()
     }
     else{
