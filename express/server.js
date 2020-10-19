@@ -36,7 +36,7 @@ router.get('/users', async(req, res) => {
       let query = `SELECT * FROM users`;
       db.query(query, (err, result) => {
         if(err){    
-          res.send("1")
+          res.send("2")
           res.end()
         }else{
           res.send("result")
