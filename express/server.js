@@ -9,6 +9,18 @@ const mysql = require('mysql');
 
 const router = express.Router();
 
+const db = mysql.createConnection({
+  host: "remotemysql.com",
+  user: "YlO55imx4W",
+  password: "xe5gPs4pNo",
+  database: "YlO55imx4W"
+});
+db.connect((err) => {
+  if (err) { console.log('Error connected to database' + err); }
+  console.log('Connected to database');
+});
+global.db = db;
+
 // <---------------- Routes START ---------------->
 
 router.get('/', (req, res) => {
@@ -18,40 +30,9 @@ router.get('/', (req, res) => {
 });
 
 router.get('/users', (req, res) => {
-  const db = mysql.createConnection({
-    host: "remotemysql.com",
-    user: "YlO55imx4W",
-    password: "xe5gPs4pNo",
-    database: "YlO55imx4W"
-  });
-  db.connect((err) => {
-    if (err) { console.log('Error connected to database' + err); }
-    console.log('Connected to database');
-  });
-  global.db = db;
   let query = `SELECT * FROM users`;
-  db.query(query, (err, result) => {
-    // if (err) { res.end(); }
-    res.json({result})
-  })
+    res.json({query})
 });
-
-router.get('/users/:id?', (req, res) => {
-  let query = `SELECT * FROM users WHERE id = ${req.params.id}`;
-  db.query(query, (err, result) => {
-    // if (err) { res.end(); }
-    res.json(result)
-  })
-})
-
-router.post('/signup', (req, res) => {
-  let query = `INSERT INTO users (username, password, age, type) VALUES ('${req.body.username}', '${req.body.password}', '${req.body.age}', '${req.body.type}');`;
-  // res.send(query)
-  db.query(query, (err, result) => {
-    if (err) { res.redirect('/'); }
-    res.send(result)
-  })
-})
 
 // <---------------- Routes END ---------------->
 
